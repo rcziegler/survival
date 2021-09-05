@@ -10,6 +10,39 @@ const TILE_SIZE = 250;
 //const TILE_WIDTH = 80;
 //const TILE_HEIGHT = 92.4;
 
+const KEY = {
+  "DOWN_NUMBER": "2",
+  "DOWN_LETTER": "s",
+  "UP_NUMBER": "8",
+  "UP_LETTER": "w",
+  "LEFT_NUMBER": "4",
+  "LEFT_LETTER": "a",
+  "RIGHT_NUMBER": "6",
+  "RIGHT_LETTER": "d"
+}
+
+document.addEventListener("keydown", (event) => {
+  switch (event.key.toLowerCase()) {
+    case KEY.UP_NUMBER:
+    case KEY.UP_LETTER:
+      console.log('> up');
+      break;
+    case KEY.DOWN_NUMBER:
+    case KEY.DOWN_LETTER:
+      console.log('> down');
+      break;
+    case KEY.LEFT_NUMBER:
+    case KEY.LEFT_LETTER:
+      console.log('> left');
+      break;
+    case KEY.RIGHT_NUMBER:
+    case KEY.RIGHT_LETTER:
+      console.log('> right');
+      break;
+  }
+
+})
+
 let app = document.getElementById('app');
 
 let div1 = document.createElement("div");
