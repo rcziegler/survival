@@ -1,8 +1,10 @@
 {
+  "xPosCharacter": 100,
+  "yPosCharacter": 50,
   "objects": [
     {
       "id": "id1",
-      "xPos": 10,
+      "xPos": 10,   
       "yPos": 10,
       "paths": [
         {

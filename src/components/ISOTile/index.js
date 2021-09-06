@@ -1,20 +1,25 @@
-import objData from '../../data/objects.json';
 
 /** */
-export const createISOTile = (id) => {
+export const createISOTile = (id, objData) => {
   let obj = document.createElement("custom-iso-tile");
   obj.setAttribute('id', id);
+  obj.setAttribute('data', JSON.stringify(objData));
+
   return obj;
 }
 
 /** */
 class ISOTile extends HTMLElement {
-  connectedCallback() {
+  constructor() {
+    super();
     this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     this.scale = 1;
     this.scaleIncrement = 0.1;
+    this.objectData;
+  }
+
+  connectedCallback() {
     this.shadow = this.attachShadow({ mode: 'open' })
-    this.objectData = objData;
     this.drawSVG();
   }
 
@@ -61,11 +66,18 @@ class ISOTile extends HTMLElement {
     obj.paths[2].d2[2] = obj.paths[2].d2[2] + DEPTH;
     obj.paths[2].d2[4] = obj.paths[2].d2[4] + DEPTH;
 
+
     this.objectData.objects[idx] = obj;
+    this.setAttribute('data', JSON.stringify(this.objectData));
   }
 
   drawSVG() {
     this.svg.innerHTML = "";
+
+    if (!this.objectData) {
+      let data = this.getAttribute('data') ? this.getAttribute('data') : null;
+      this.objectData = JSON.parse(data);
+    }
 
     let height = 500;//currObject.height * this.scale;
     let id = this.getAttribute('id') ? this.getAttribute('id') : null;
@@ -100,6 +112,7 @@ class ISOTile extends HTMLElement {
       this.updateObject(e.target.parentNode.id);
       this.drawSVG();
     }
+
   }
 }
 /**
@@ -108,10 +121,3 @@ class ISOTile extends HTMLElement {
 window.addEventListener('DOMContentLoaded', () => {
   customElements.define('custom-iso-tile', ISOTile);
 });
-
-/**
- * Original shap change
- */
-    // // paths[1]
-    // obj.paths[0].d2[4] = obj.paths[0].d2[4] + 0.5;
-    // obj.paths[1].d2[2] = obj.paths[1].d2[2] + 0.5;
